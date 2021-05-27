@@ -17,3 +17,5 @@ Enables entering Freemius plugin activation codes via wp-config.php
    ```
 
 4. Visit the plugin activation page in the dashboard. It should already be authorized with your key!
+
+5. This process actually still adds your keys to the database, just as if you had typed it in manually. So if you prefer, when you're done with the activation, you can remove the two definitions from wp-config and deactivate and/or delete this plugin.
