@@ -1,2 +1,19 @@
 # freemius-auto-activation
+
 Enables entering Freemius plugin activation codes via wp-config.php
+
+## Get started
+
+1. Install and activate this plugin
+
+2. Locate the "shortcode" of the plugin you want to activate. This is different from the standard slug for the plugin or the slug that will be found in the database and freemius database settings in the options table. It may be easiest to ask the plugin developer, but you can also look through the plugin code for a function that looks like this: `function my_prefix_fs() { global $my_prefix_fs;`. In this case the shortcode is `my_prefix_fs`. The function typically contains the `fs_dynamic_init` function, so try searching for that string.
+
+3. Add the following to your `wp-config.php` file. If you have multiple freemius plugins, add each shortcode to the FS_SHORTCODES array:  
+
+   ```php
+   // freemius activation
+   define( 'FS_SHORTCODES', array( 'my_prefix_fs' ) );
+   define( 'WP__MY_PREFIX_FS__LICENSE_KEY', '<your_license_key_here>' );
+   ```
+
+4. Visit the plugin activation page in the dashboard. It should already be authorized with your key!
