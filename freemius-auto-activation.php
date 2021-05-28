@@ -28,17 +28,16 @@ function squarecandy_freemius_autoactivate() {
 		require_once plugin_dir_path( __FILE__ ) . 'class-freemius-license-auto-activator.php';
 	}
 
-	if ( defined( 'FS_SHORTCODES' ) && is_array( FS_SHORTCODES ) ) :
-		foreach ( FS_SHORTCODES as $fs_shortcode ) :
+	if ( defined( 'FS_SHORTCODES' ) && ! empty( FS_SHORTCODES ) ) :
+		if ( ! is_array( FS_SHORTCODES ) ) {
+			$fs_shortcodes = array( FS_SHORTCODES );
+		} else {
+			$fs_shortcodes = FS_SHORTCODES;
+		}
+		foreach ( $fs_shortcodes as $fs_shortcode ) :
 			if ( defined( 'WP__' . strtoupper( $fs_shortcode ) . '__LICENSE_KEY' ) ) {
 				$fs_license_activator = new Freemius_License_Auto_Activator( $fs_shortcode );
 			}
 		endforeach;
 	endif;
 }
-
-
-
-
-
-
