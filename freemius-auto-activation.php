@@ -4,7 +4,7 @@ Plugin Name: Freemius Auto Activation
 Plugin URI: https://github.com/squarecandy/freemius-auto-activation
 GitHub Plugin URI: https://github.com/squarecandy/freemius-auto-activation
 Description: Enables entering Freemius plugin activation codes via wp-config.php
-Version: 1.0.0
+Version: 1.1.0
 Author: vovafeldman, squarecandy
 
 Based off of this gist:
