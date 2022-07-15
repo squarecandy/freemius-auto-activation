@@ -31,8 +31,7 @@ class Freemius_License_Auto_Activator {
 		}
 
 		if ( $fs->is_registered() ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "Error: The user already opted-in to Freemius\n";
-			return;
+			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "Notice: The user already opted-in to Freemius\n";
 		}
 
 		$option_key = "{$this->priv_shortcode}_auto_license_activation";
