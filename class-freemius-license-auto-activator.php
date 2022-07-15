@@ -64,7 +64,7 @@ class Freemius_License_Auto_Activator {
 			error_log( $message ); // phpcs:ignore
 		}
 		if ( defined( 'FREEMIUS_WP_CLI' ) && FREEMIUS_WP_CLI ) {
-			echo __LINE__ . " $message \n";
+			echo "$message \n";
 		}
 	}
 }
