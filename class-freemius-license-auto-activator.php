@@ -5,7 +5,7 @@ class Freemius_License_Auto_Activator {
 
 	public function __construct( $shortcode ) {
 		$this->priv_shortcode = $shortcode;
-		add_action( 'admin_init', array( $this, 'license_key_auto_activation', 999 ) );
+		add_action( 'admin_init', array( $this, 'license_key_auto_activation' ), 999 );
 	}
 
 	public function license_key_auto_activation() {
