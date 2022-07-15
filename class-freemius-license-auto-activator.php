@@ -11,7 +11,7 @@ class Freemius_License_Auto_Activator {
 	public function license_key_auto_activation() {
 
 		$fs = false;
-		if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " license_key_auto_activation function started\n";
+		$this->debug_notices( 'license_key_auto_activation function started' );
 
 		if ( function_exists( $this->priv_shortcode ) ) {
 			$fs = ( $this->priv_shortcode )();
@@ -21,41 +21,50 @@ class Freemius_License_Auto_Activator {
 		}
 
 		if ( empty( $fs ) ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " fs is empty \n";
+			$this->debug_notices( 'fs is empty ' );
 			return;
 		}
 
 		if ( ! $fs->has_api_connectivity() ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Error: no API connectivity\n";
+			$this->debug_notices( 'Error: no API connectivity' );
 			return;
 		}
 
 		if ( $fs->is_registered() ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Notice: The user already opted-in to Freemius\n";
+			$this->debug_notices( 'Notice: The user already opted-in to Freemius' );
 		}
 
 		$option_key = "{$this->priv_shortcode}_auto_license_activation";
-		if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " $option_key \n";
+		$this->debug_notices( "$option_key " );
 
 		try {
 			$key       = constant( 'WP__' . strtoupper( $this->priv_shortcode ) . '__LICENSE_KEY' );
 			$next_page = $fs->activate_migrated_license( $key );
 		} catch ( Exception $e ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Error: $e->message \n";
+			$this->debug_notices( "Error: $e->message " );
 			update_option( $option_key, 'unexpected_error' );
 			return;
 		}
 
 		if ( $fs->can_use_premium_code() ) {
 			update_option( $option_key, 'done' );
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Success: license key install is done.\n";
+			$this->debug_notices( 'Success: license key install is done.' );
 
 			if ( is_string( $next_page ) ) {
 				fs_redirect( $next_page );
 			}
 		} else {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Error: license key install failed \n";
+			$this->debug_notices( 'Error: license key install failed ' );
 			update_option( $option_key, 'failed' );
+		}
+	}
+
+	private function debug_notices( $message ) {
+		if ( WP_DEBUG ) {
+			error_log( $message ); // phpcs:ignore
+		}
+		if ( defined( 'FREEMIUS_WP_CLI' ) && FREEMIUS_WP_CLI ) {
+			echo __LINE__ . " $message \n";
 		}
 	}
 }
