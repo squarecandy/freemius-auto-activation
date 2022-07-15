@@ -11,7 +11,7 @@ class Freemius_License_Auto_Activator {
 	public function license_key_auto_activation() {
 
 		$fs = false;
-		if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "license_key_auto_activation function started\n";
+		if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " license_key_auto_activation function started\n";
 
 		if ( function_exists( $this->priv_shortcode ) ) {
 			$fs = ( $this->priv_shortcode )();
@@ -26,12 +26,12 @@ class Freemius_License_Auto_Activator {
 		}
 
 		if ( ! $fs->has_api_connectivity() ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "Error: no API connectivity\n";
+			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Error: no API connectivity\n";
 			return;
 		}
 
 		if ( $fs->is_registered() ) {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "Notice: The user already opted-in to Freemius\n";
+			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Notice: The user already opted-in to Freemius\n";
 		}
 
 		$option_key = "{$this->priv_shortcode}_auto_license_activation";
@@ -48,13 +48,13 @@ class Freemius_License_Auto_Activator {
 
 		if ( $fs->can_use_premium_code() ) {
 			update_option( $option_key, 'done' );
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . "Success: license key install is done.\n";
+			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Success: license key install is done.\n";
 
 			if ( is_string( $next_page ) ) {
 				fs_redirect( $next_page );
 			}
 		} else {
-			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo "Error: license key install failed \n";
+			if ( WP_DEBUG || FREEMIUS_WP_CLI ) echo __LINE__ . " Error: license key install failed \n";
 			update_option( $option_key, 'failed' );
 		}
 	}
