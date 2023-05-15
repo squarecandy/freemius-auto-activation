@@ -25,7 +25,7 @@ class Freemius_License_Auto_Activator {
 			return;
 		}
 
-		if ( ! $fs->has_api_connectivity() ) {
+		if ( false === $fs->has_api_connectivity() ) {
 			$this->debug_notices( 'Error: no API connectivity' );
 			return;
 		}
