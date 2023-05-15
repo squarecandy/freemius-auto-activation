@@ -41,7 +41,7 @@ class Freemius_License_Auto_Activator {
 			$key       = constant( 'WP__' . strtoupper( $this->priv_shortcode ) . '__LICENSE_KEY' );
 			$next_page = $fs->activate_migrated_license( $key );
 		} catch ( Exception $e ) {
-			$this->debug_notices( "Error: $e->message " );
+			$this->debug_notices( 'Error: ' . $e->getMessage() );
 			update_option( $option_key, 'unexpected_error' );
 			return;
 		}
